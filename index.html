@@ -12,14 +12,16 @@
     />
     <style>
       :root {
-        --bg: #0b1220;
-        --bg-2: #121f36;
-        --ink: #e2e8f0;
-        --muted: #94a3b8;
-        --card: rgba(15, 23, 42, 0.72);
-        --line: rgba(148, 163, 184, 0.3);
-        --accent: #b45309;
+        --bg: #05080f;
+        --bg-2: #0e1728;
+        --bg-3: #1b2439;
+        --ink: #edf2ff;
+        --muted: #a5b4cf;
+        --card: rgba(14, 23, 40, 0.8);
+        --line: rgba(148, 163, 184, 0.25);
+        --accent: #d97706;
         --accent-2: #f59e0b;
+        --accent-3: #38bdf8;
       }
 
       * {
@@ -32,16 +34,48 @@
         font-family: "Manrope", sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(circle at 10% 15%, rgba(180, 83, 9, 0.25), transparent 30%),
-          radial-gradient(circle at 88% 8%, rgba(59, 130, 246, 0.22), transparent 28%),
-          linear-gradient(145deg, var(--bg), var(--bg-2));
+          radial-gradient(circle at 12% 10%, rgba(217, 119, 6, 0.25), transparent 34%),
+          radial-gradient(circle at 85% 4%, rgba(56, 189, 248, 0.18), transparent 30%),
+          linear-gradient(145deg, var(--bg), var(--bg-2) 55%, var(--bg-3));
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.18;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.45) 0.5px, transparent 0.5px);
+        background-size: 3px 3px;
+        mix-blend-mode: soft-light;
       }
 
       .wrap {
         width: min(1050px, 92vw);
         margin: 0 auto;
-        padding: 36px 0 56px;
+        padding: 30px 0 60px;
         position: relative;
+      }
+
+      .banner {
+        margin-bottom: 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(2, 6, 23, 0.55);
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .banner-track {
+        display: inline-block;
+        padding: 10px 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: #fbbf24;
+        animation: marquee 24s linear infinite;
       }
 
       .orb {
@@ -81,14 +115,21 @@
       .card {
         background: var(--card);
         border: 1px solid var(--line);
-        border-radius: 22px;
-        backdrop-filter: blur(7px);
-        box-shadow: 0 22px 44px rgba(2, 6, 23, 0.4);
+        border-radius: 20px;
+        backdrop-filter: blur(9px);
+        box-shadow: 0 18px 35px rgba(2, 6, 23, 0.45);
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(251, 191, 36, 0.45);
+        box-shadow: 0 20px 40px rgba(2, 6, 23, 0.55);
       }
 
       .hero {
         text-align: center;
-        padding: 36px 22px;
+        padding: 40px 22px 30px;
         position: relative;
         overflow: hidden;
       }
@@ -106,7 +147,7 @@
         display: inline-block;
         padding: 8px 14px;
         border-radius: 999px;
-        border: 1px solid rgba(245, 158, 11, 0.55);
+        border: 1px solid rgba(245, 158, 11, 0.8);
         color: #fbbf24;
         font-size: 0.72rem;
         text-transform: uppercase;
@@ -116,16 +157,18 @@
 
       h1 {
         font-family: "Abril Fatface", serif;
-        font-size: clamp(2.3rem, 6vw, 4.3rem);
+        font-size: clamp(2.5rem, 6.7vw, 4.8rem);
         line-height: 1.03;
-        margin: 14px 0 10px;
+        margin: 16px 0 10px;
+        text-wrap: balance;
       }
 
       .sub {
         width: min(740px, 100%);
         margin: 0 auto;
-        color: #dbe7ff;
-        font-size: clamp(1rem, 2vw, 1.22rem);
+        color: #dae5ff;
+        font-size: clamp(1.02rem, 2vw, 1.24rem);
+        text-wrap: pretty;
       }
 
       .controls {
@@ -137,7 +180,7 @@
 
       button {
         border: 1px solid transparent;
-        border-radius: 12px;
+        border-radius: 14px;
         padding: 12px 18px;
         font-weight: 800;
         font-size: 0.95rem;
@@ -150,15 +193,15 @@
       }
 
       #musicToggle {
-        background: linear-gradient(120deg, var(--accent), var(--accent-2));
+        background: linear-gradient(120deg, #b45309, var(--accent-2));
         color: #fff;
-        box-shadow: 0 12px 26px rgba(180, 83, 9, 0.38);
+        box-shadow: 0 12px 28px rgba(217, 119, 6, 0.42);
       }
 
       #cheerBtn {
-        background: rgba(148, 163, 184, 0.16);
+        background: rgba(56, 189, 248, 0.12);
         color: #f8fafc;
-        border-color: rgba(148, 163, 184, 0.4);
+        border-color: rgba(56, 189, 248, 0.35);
       }
 
       .note {
@@ -167,8 +210,15 @@
         font-weight: 600;
       }
 
+      .hero-meta {
+        margin-top: 10px;
+        color: #7dd3fc;
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+
       .stats {
-        margin-top: 16px;
+        margin-top: 18px;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 12px;
@@ -176,9 +226,9 @@
 
       .stat {
         padding: 14px;
-        border-radius: 14px;
+        border-radius: 12px;
         border: 1px solid rgba(148, 163, 184, 0.22);
-        background: rgba(2, 6, 23, 0.32);
+        background: rgba(2, 6, 23, 0.46);
       }
 
       .stat-label {
@@ -196,19 +246,19 @@
       }
 
       .grid {
-        margin-top: 16px;
+        margin-top: 18px;
         display: grid;
         gap: 14px;
         grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       }
 
       .panel {
-        padding: 18px;
+        padding: 20px;
       }
 
       h2 {
         margin: 0 0 8px;
-        font-size: 1.08rem;
+        font-size: 1.14rem;
       }
 
       p {
@@ -217,8 +267,8 @@
       }
 
       .memory-panel {
-        margin-top: 16px;
-        padding: 20px;
+        margin-top: 18px;
+        padding: 22px;
       }
 
       .memory-top {
@@ -237,20 +287,20 @@
       .gallery {
         display: grid;
         gap: 14px;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
       }
 
       .photo {
         margin: 0;
-        border-radius: 16px;
+        border-radius: 18px;
         overflow: hidden;
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        background: rgba(2, 6, 23, 0.42);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        background: rgba(2, 6, 23, 0.48);
       }
 
       .photo img {
         width: 100%;
-        height: 260px;
+        height: 300px;
         display: block;
         object-fit: cover;
         transition: transform 0.35s ease, filter 0.35s ease;
@@ -263,19 +313,49 @@
       }
 
       .photo figcaption {
-        padding: 10px 12px 12px;
-        font-size: 0.9rem;
+        padding: 11px 12px 13px;
+        font-size: 0.92rem;
+        font-weight: 700;
         color: #dbe4f3;
       }
 
       .wishes-panel {
-        margin-top: 16px;
-        padding: 20px;
+        margin-top: 18px;
+        padding: 22px;
       }
 
-      .wishes-intro {
-        color: var(--muted);
+      .wishes-head {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: 12px;
+      }
+
+      .wishes-tools {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      #wishSearch {
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        background: rgba(2, 6, 23, 0.5);
+        color: #e2e8f0;
+        border-radius: 10px;
+        padding: 9px 11px;
+        width: min(260px, 75vw);
+      }
+
+      #wishSearch::placeholder {
+        color: #8ea2c3;
+      }
+
+      .wish-count {
+        font-size: 0.84rem;
+        color: #7dd3fc;
+        font-weight: 700;
       }
 
       .wish-items {
@@ -283,11 +363,15 @@
         padding-left: 18px;
         display: grid;
         gap: 8px;
+        max-height: 420px;
+        overflow: auto;
+        scrollbar-width: thin;
       }
 
       .wish-items li {
         color: #dbe4f3;
         line-height: 1.5;
+        padding-right: 8px;
       }
 
       .wish-items strong {
@@ -296,9 +380,20 @@
 
       footer {
         text-align: center;
-        margin-top: 20px;
+        margin-top: 22px;
         color: #cbd5e1;
         font-weight: 700;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.45s ease, transform 0.45s ease;
+      }
+
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       @keyframes drift {
@@ -307,6 +402,15 @@
         }
         to {
           transform: translateY(8px) translateX(7px);
+        }
+      }
+
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
         }
       }
 
@@ -323,16 +427,27 @@
           flex-direction: column;
           align-items: flex-start;
         }
+
+        .wishes-head {
+          flex-direction: column;
+          align-items: flex-start;
+        }
       }
     </style>
   </head>
   <body>
     <main class="wrap">
+      <div class="banner" aria-hidden="true">
+        <div class="banner-track">
+          HAPPY BIRTHDAY DAD • FAMILY MVP • ALWAYS WORKING • HAPPY BIRTHDAY DAD • FAMILY MVP • ALWAYS WORKING •
+        </div>
+      </div>
+
       <span class="orb o1" aria-hidden="true"></span>
       <span class="orb o2" aria-hidden="true"></span>
       <span class="orb o3" aria-hidden="true"></span>
 
-      <section class="card hero">
+      <section class="card hero reveal">
         <span class="tag">Happy Birthday</span>
         <h1>To the best Dad in the world</h1>
         <p class="sub">
@@ -347,6 +462,7 @@
         </div>
 
         <p class="note" id="cheerText">Love you, Dad.</p>
+        <p class="hero-meta" id="wishSummary">Loading birthday wishes...</p>
 
         <div class="stats" aria-label="Dad highlights">
           <article class="stat">
@@ -368,7 +484,7 @@
         </div>
       </section>
 
-      <section class="grid" aria-label="Birthday highlights">
+      <section class="grid reveal" aria-label="Birthday highlights">
         <article class="card panel">
           <h2>What Makes You Amazing</h2>
           <p>
@@ -398,7 +514,7 @@
         </article>
       </section>
 
-      <section class="card memory-panel" aria-label="Photo memories">
+      <section class="card memory-panel reveal" aria-label="Photo memories">
         <div class="memory-top">
           <h2>Memories</h2>
           <p>A few favorite moments worth celebrating today.</p>
@@ -431,8 +547,14 @@
         </div>
       </section>
 
-      <section class="card wishes-panel" aria-label="Birthday wishes">
-        <h2>Birthday Wishes</h2>
+      <section class="card wishes-panel reveal" aria-label="Birthday wishes">
+        <div class="wishes-head">
+          <h2>Birthday Wishes</h2>
+          <div class="wishes-tools">
+            <input id="wishSearch" type="search" placeholder="Search wishes..." />
+            <span id="wishCount" class="wish-count"></span>
+          </div>
+        </div>
                 <ul class="wish-items">
           <li><strong>Amy Nicole:</strong> Happy Birthday!</li>
           <li><strong>Angela Edmonds:</strong> Happy Birthday!</li>
@@ -505,7 +627,7 @@
         </ul>
       </section>
 
-      <footer>Made with love for your special day, Dad.</footer>
+      <footer class="reveal">Made with love for your special day, Dad.</footer>
     </main>
 
     <audio id="birthdaySong" preload="auto" autoplay playsinline>
@@ -518,6 +640,10 @@
       const musicToggle = document.getElementById("musicToggle");
       const cheerText = document.getElementById("cheerText");
       const cheerBtn = document.getElementById("cheerBtn");
+      const wishSearch = document.getElementById("wishSearch");
+      const wishCount = document.getElementById("wishCount");
+      const wishSummary = document.getElementById("wishSummary");
+      const wishItems = Array.from(document.querySelectorAll(".wish-items li"));
       const cheers = [
         "Love you, Dad.",
         "Happy Birthday, Dad.",
@@ -596,6 +722,39 @@
         cheerIndex = (cheerIndex + 1) % cheers.length;
         cheerText.textContent = cheers[cheerIndex];
       });
+
+      function updateWishCounts() {
+        const visible = wishItems.filter((item) => item.style.display !== "none").length;
+        wishCount.textContent = `${visible} shown`;
+        wishSummary.textContent = `${wishItems.length} birthday wishes from friends and family.`;
+      }
+
+      function filterWishes() {
+        const query = wishSearch.value.trim().toLowerCase();
+        wishItems.forEach((item) => {
+          const text = item.textContent.toLowerCase();
+          item.style.display = query && !text.includes(query) ? "none" : "";
+        });
+        updateWishCounts();
+      }
+
+      wishSearch.addEventListener("input", filterWishes);
+      updateWishCounts();
+
+      const revealTargets = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      revealTargets.forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>
