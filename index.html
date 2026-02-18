@@ -12,12 +12,14 @@
     />
     <style>
       :root {
-        --bg-1: #0f172a;
-        --bg-2: #1e293b;
+        --bg: #0b1220;
+        --bg-2: #121f36;
         --ink: #e2e8f0;
+        --muted: #94a3b8;
+        --card: rgba(15, 23, 42, 0.72);
+        --line: rgba(148, 163, 184, 0.3);
         --accent: #b45309;
-        --accent-2: #475569;
-        --card: rgba(15, 23, 42, 0.62);
+        --accent-2: #f59e0b;
       }
 
       * {
@@ -30,160 +32,183 @@
         font-family: "Manrope", sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(circle at 15% 20%, rgba(180, 83, 9, 0.28), transparent 40%),
-          radial-gradient(circle at 85% 5%, rgba(71, 85, 105, 0.38), transparent 30%),
-          linear-gradient(160deg, var(--bg-1), var(--bg-2));
+          radial-gradient(circle at 10% 15%, rgba(180, 83, 9, 0.25), transparent 30%),
+          radial-gradient(circle at 88% 8%, rgba(59, 130, 246, 0.22), transparent 28%),
+          linear-gradient(145deg, var(--bg), var(--bg-2));
       }
 
       .wrap {
-        width: min(980px, 92vw);
+        width: min(1050px, 92vw);
         margin: 0 auto;
-        padding: 48px 0 64px;
+        padding: 36px 0 56px;
         position: relative;
       }
 
-      .float {
+      .orb {
         position: absolute;
         border-radius: 999px;
+        filter: blur(0.1px);
         opacity: 0.7;
         animation: drift 8s ease-in-out infinite alternate;
       }
 
-      .f1 {
-        width: 62px;
-        height: 62px;
-        background: rgba(180, 83, 9, 0.35);
-        top: 28px;
+      .o1 {
+        width: 56px;
+        height: 56px;
+        background: rgba(180, 83, 9, 0.45);
         left: -8px;
+        top: 12px;
       }
 
-      .f2 {
-        width: 38px;
-        height: 38px;
-        background: rgba(148, 163, 184, 0.42);
-        top: 170px;
-        right: 28px;
-        animation-delay: 0.9s;
+      .o2 {
+        width: 26px;
+        height: 26px;
+        background: rgba(148, 163, 184, 0.45);
+        right: 18px;
+        top: 130px;
+        animation-delay: 0.8s;
       }
 
-      .f3 {
-        width: 22px;
-        height: 22px;
-        background: rgba(226, 232, 240, 0.25);
+      .o3 {
+        width: 18px;
+        height: 18px;
+        background: rgba(245, 158, 11, 0.45);
         right: -2px;
-        bottom: 140px;
-        animation-delay: 0.4s;
+        bottom: 86px;
+        animation-delay: 0.35s;
       }
 
-      .hero,
-      .panel {
+      .card {
         background: var(--card);
-        backdrop-filter: blur(6px);
-        border: 1px solid rgba(148, 163, 184, 0.35);
+        border: 1px solid var(--line);
         border-radius: 22px;
-        box-shadow: 0 22px 40px rgba(2, 6, 23, 0.35);
+        backdrop-filter: blur(7px);
+        box-shadow: 0 22px 44px rgba(2, 6, 23, 0.4);
       }
 
       .hero {
         text-align: center;
-        padding: 38px 22px;
+        padding: 36px 22px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: auto -30% -70% -30%;
+        height: 180px;
+        background: radial-gradient(circle, rgba(245, 158, 11, 0.13), transparent 60%);
+        pointer-events: none;
       }
 
       .tag {
         display: inline-block;
-        border: 1px solid rgba(180, 83, 9, 0.6);
-        color: var(--accent);
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        border-radius: 999px;
         padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(245, 158, 11, 0.55);
+        color: #fbbf24;
         font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        font-weight: 800;
       }
 
       h1 {
         font-family: "Abril Fatface", serif;
-        font-size: clamp(2.1rem, 6vw, 4rem);
-        line-height: 1.04;
-        margin: 16px 0 10px;
+        font-size: clamp(2.3rem, 6vw, 4.3rem);
+        line-height: 1.03;
+        margin: 14px 0 10px;
       }
 
       .sub {
-        font-size: clamp(1rem, 2.2vw, 1.22rem);
-        max-width: 640px;
+        width: min(740px, 100%);
         margin: 0 auto;
+        color: #dbe7ff;
+        font-size: clamp(1rem, 2vw, 1.22rem);
       }
 
       .controls {
+        margin-top: 22px;
         display: flex;
         justify-content: center;
         gap: 12px;
-        margin-top: 22px;
       }
 
       button {
-        border: none;
-        background: var(--accent);
-        color: #fff;
-        font-weight: 800;
-        letter-spacing: 0.01em;
+        border: 1px solid transparent;
         border-radius: 12px;
         padding: 12px 18px;
+        font-weight: 800;
+        font-size: 0.95rem;
         cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
       }
 
-      button.alt {
-        background: rgba(148, 163, 184, 0.2);
+      button:hover {
+        transform: translateY(-2px);
+      }
+
+      #musicToggle {
+        background: linear-gradient(120deg, var(--accent), var(--accent-2));
+        color: #fff;
+        box-shadow: 0 12px 26px rgba(180, 83, 9, 0.38);
+      }
+
+      #cheerBtn {
+        background: rgba(148, 163, 184, 0.16);
         color: #f8fafc;
+        border-color: rgba(148, 163, 184, 0.4);
+      }
+
+      .note {
+        margin-top: 16px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .stats {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+      }
+
+      .stat {
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        background: rgba(2, 6, 23, 0.32);
+      }
+
+      .stat-label {
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #fbbf24;
+        font-weight: 800;
+      }
+
+      .stat-value {
+        margin-top: 4px;
+        font-size: 1.1rem;
+        font-weight: 700;
       }
 
       .grid {
+        margin-top: 16px;
         display: grid;
-        gap: 16px;
-        margin-top: 18px;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       }
 
       .panel {
-        padding: 20px;
-      }
-
-      .gallery {
-        margin-top: 18px;
-        display: grid;
-        gap: 14px;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      }
-
-      .photo {
-        overflow: hidden;
-        border-radius: 18px;
-        border: 1px solid rgba(148, 163, 184, 0.35);
-        background: rgba(15, 23, 42, 0.65);
-        box-shadow: 0 16px 30px rgba(2, 6, 23, 0.3);
-      }
-
-      .photo img {
-        display: block;
-        width: 100%;
-        height: 260px;
-        object-fit: cover;
-        transition: transform 0.35s ease;
-      }
-
-      .photo:hover img {
-        transform: scale(1.04);
-      }
-
-      .photo figcaption {
-        padding: 10px 12px 12px;
-        font-size: 0.9rem;
-        color: #cbd5e1;
+        padding: 18px;
       }
 
       h2 {
         margin: 0 0 8px;
-        font-size: 1.05rem;
+        font-size: 1.08rem;
       }
 
       p {
@@ -191,16 +216,88 @@
         line-height: 1.6;
       }
 
-      .note {
-        margin-top: 18px;
-        text-align: center;
+      .memory-panel {
+        margin-top: 16px;
+        padding: 20px;
+      }
+
+      .memory-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .memory-top p {
+        color: var(--muted);
         font-size: 0.95rem;
-        opacity: 0.92;
+      }
+
+      .gallery {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .photo {
+        margin: 0;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        background: rgba(2, 6, 23, 0.42);
+      }
+
+      .photo img {
+        width: 100%;
+        height: 260px;
+        display: block;
+        object-fit: cover;
+        transition: transform 0.35s ease, filter 0.35s ease;
+        filter: saturate(0.95) contrast(1.03);
+      }
+
+      .photo:hover img {
+        transform: scale(1.04);
+        filter: saturate(1.08) contrast(1.07);
+      }
+
+      .photo figcaption {
+        padding: 10px 12px 12px;
+        font-size: 0.9rem;
+        color: #dbe4f3;
+      }
+
+      .wishes-panel {
+        margin-top: 16px;
+        padding: 20px;
+      }
+
+      .wishes-intro {
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+
+      .wish-items {
+        margin: 0;
+        padding-left: 18px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .wish-items li {
+        color: #dbe4f3;
+        line-height: 1.5;
+      }
+
+      .wish-items strong {
+        color: #f8fafc;
       }
 
       footer {
         text-align: center;
-        margin-top: 24px;
+        margin-top: 20px;
+        color: #cbd5e1;
         font-weight: 700;
       }
 
@@ -209,11 +306,11 @@
           transform: translateY(-8px) translateX(-6px);
         }
         to {
-          transform: translateY(8px) translateX(8px);
+          transform: translateY(8px) translateX(7px);
         }
       }
 
-      @media (max-width: 560px) {
+      @media (max-width: 620px) {
         .controls {
           flex-direction: column;
         }
@@ -221,33 +318,58 @@
         button {
           width: 100%;
         }
+
+        .memory-top {
+          flex-direction: column;
+          align-items: flex-start;
+        }
       }
     </style>
   </head>
   <body>
     <main class="wrap">
-      <span class="float f1" aria-hidden="true"></span>
-      <span class="float f2" aria-hidden="true"></span>
-      <span class="float f3" aria-hidden="true"></span>
+      <span class="orb o1" aria-hidden="true"></span>
+      <span class="orb o2" aria-hidden="true"></span>
+      <span class="orb o3" aria-hidden="true"></span>
 
-      <section class="hero">
+      <section class="card hero">
         <span class="tag">Happy Birthday</span>
         <h1>To the best Dad in the world</h1>
         <p class="sub">
-          Thank you for every lesson, every laugh, and every time you showed up.
-          Today is all about celebrating you.
+          Thank you for every lesson, every laugh, and every time you questioned my stupid ideas.
+          Today is about celebrating your strength, your heart, and everything
+          that makes you you.
         </p>
 
         <div class="controls">
           <button id="musicToggle" type="button">Play Birthday Song</button>
-          <button id="cheerBtn" class="alt" type="button">Send a Cheer</button>
+          <button id="cheerBtn" type="button">Send a Cheer</button>
         </div>
 
         <p class="note" id="cheerText">Love you, Dad.</p>
+
+        <div class="stats" aria-label="Dad highlights">
+          <article class="stat">
+            <div class="stat-label">Title</div>
+            <div class="stat-value">Family MVP</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Known For</div>
+            <div class="stat-value">Always Working</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Signature Move</div>
+            <div class="stat-value">Always Showing Up</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Today</div>
+            <div class="stat-value">Your Celebration</div>
+          </article>
+        </div>
       </section>
 
       <section class="grid" aria-label="Birthday highlights">
-        <article class="panel">
+        <article class="card panel">
           <h2>What Makes You Amazing</h2>
           <p>
             Your kindness, your humor, and your steady support make life better for
@@ -255,28 +377,28 @@
           </p>
         </article>
 
-        <article class="panel">
+        <article class="card panel">
           <h2>Favorite Dad Qualities</h2>
           <p>
-            Dependable. Strong. Thoughtful. Always ready with a great story and the
-            best advice.
+            Dependable. Strong. Thoughtful. A true hard worker who leads by
+            example every day.
           </p>
         </article>
 
-        <article class="panel">
+        <article class="card panel">
           <h2>Birthday Wish</h2>
           <p>
-            Wishing you a year filled with health, adventure, great food, and lots
-            of moments with family.
+            Wishing you a year filled with health, adventure, great meals, and lots
+            of unforgettable moments with family.
           </p>
         </article>
       </section>
 
-      <section class="panel" style="margin-top: 18px" aria-label="Photo memories">
-        <h2>Memories</h2>
-        <p style="margin-bottom: 14px">
-          A few favorite memories worth celebrating today.
-        </p>
+      <section class="card memory-panel" aria-label="Photo memories">
+        <div class="memory-top">
+          <h2>Memories</h2>
+          <p>A few favorite moments worth celebrating today.</p>
+        </div>
         <div class="gallery">
           <figure class="photo">
             <img
@@ -305,6 +427,80 @@
         </div>
       </section>
 
+      <section class="card wishes-panel" aria-label="Birthday wishes">
+        <h2>Birthday Wishes</h2>
+                <ul class="wish-items">
+          <li><strong>Amy Nicole:</strong> Happy Birthday!</li>
+          <li><strong>Angela Edmonds:</strong> Happy Birthday!</li>
+          <li><strong>Anita Ishman:</strong> Happy Birthday!</li>
+          <li><strong>Austin Barrington:</strong> Happy Birthday!</li>
+          <li><strong>Bill Garrison:</strong> Hope you have a great day!</li>
+          <li><strong>Brandon Ashline:</strong> Happy Birthday!</li>
+          <li><strong>Brian Oswald:</strong> Happy Birthday!</li>
+          <li><strong>Brooke Myers Hunter:</strong> Happy Birthday!</li>
+          <li><strong>Bryan Hollie:</strong> Have a great birthday!</li>
+          <li><strong>Chris E Trail:</strong> HBD!</li>
+          <li><strong>Clete Crutcher:</strong> Happy Birthday!</li>
+          <li><strong>Cory Robinson:</strong> Happy Birthday!</li>
+          <li><strong>Courtney Warren:</strong> Happy Birthday!</li>
+          <li><strong>Crystal Goins Rogers:</strong> Happy Birthday!</li>
+          <li><strong>Danny Morgan:</strong> Happy Birthday!</li>
+          <li><strong>David Ashlock:</strong> Happy Birthday!</li>
+          <li><strong>David Dewberry:</strong> Happy Birthday!!</li>
+          <li><strong>Deb Stein:</strong> Happy Birthday!!</li>
+          <li><strong>Debbie Jennings Kaltwasser:</strong> Happy Birthday!</li>
+          <li><strong>Debi Wallaby:</strong> Happy Birthday!</li>
+          <li><strong>Derek Coffey:</strong> Happy Birthday!!</li>
+          <li><strong>Donna Smith Vanzant:</strong> Happy Birthday!</li>
+          <li><strong>Dustin Steele:</strong> Smile, it's your birthday!</li>
+          <li><strong>Dwayne Townsend:</strong> Happy Birthday!</li>
+          <li><strong>Gina Brooks Jackson:</strong> Happy Birthday!!</li>
+          <li><strong>Greg Perryman:</strong> Happy Birthday, God bless you.</li>
+          <li><strong>Harolyn Jones Bean:</strong> Happy Birthday!</li>
+          <li><strong>Jackie Bizzell:</strong> Happy Birthday!!</li>
+          <li><strong>James Higgins:</strong> Happy Birthday!</li>
+          <li><strong>James Morand:</strong> Happy Birthday!</li>
+          <li><strong>Jeff Elder:</strong> Happy Birthday!</li>
+          <li><strong>Jennifer Hamby Wyse:</strong> Happy Birthday!</li>
+          <li><strong>Jill Purser Spradlin:</strong> Happy Birthday!!</li>
+          <li><strong>Jim Thompson:</strong> Happy birthday, cousin!</li>
+          <li><strong>Joe Shelton:</strong> Happy Birthday!</li>
+          <li><strong>John Burgess:</strong> Hope you have a great day!</li>
+          <li><strong>Johnathan Sublet:</strong> Happy Birthday!</li>
+          <li><strong>Julie Peaslee:</strong> Happy Birthday!</li>
+          <li><strong>Kala Olivo Sharp:</strong> Happy Birthday!</li>
+          <li><strong>Kelly Maureen:</strong> Happy Birthday!!</li>
+          <li><strong>Kevin Jackson:</strong> HBD!</li>
+          <li><strong>Kerri Bristow:</strong> Happy Birthday!</li>
+          <li><strong>Kristy Kelso Greenwood:</strong> Happy Birthday!!</li>
+          <li><strong>Larry Arrowood:</strong> Happy Birthday! So proud of you. Love you more every day.</li>
+          <li><strong>Maggie Shiroma:</strong> Happy Birthday!!</li>
+          <li><strong>Mandy Burgess Lonsdale:</strong> Happy Birthday!</li>
+          <li><strong>Megan Michelle Ashline:</strong> Happy Birthday!</li>
+          <li><strong>Michael Garrison:</strong> Hope you have a great day!</li>
+          <li><strong>Michele Duzett:</strong> Happy Birthday!</li>
+          <li><strong>Michelle Studie:</strong> Happy Birthday!</li>
+          <li><strong>Mike Duncan:</strong> Happy Birthday!</li>
+          <li><strong>Nancy Carl Westfall:</strong> Happy Birthday, have a blessed year!</li>
+          <li><strong>Nate Martin:</strong> Happy Birthday!</li>
+          <li><strong>Paul Ishman:</strong> Happy Birthday!!</li>
+          <li><strong>Paul Stokes:</strong> Happy Birthday!</li>
+          <li><strong>Rajaperumal Ramachandran:</strong> Happy Birthday!</li>
+          <li><strong>Rhonda S Shelton:</strong> Smile, it's your birthday!</li>
+          <li><strong>Roy Dale Smith:</strong> Happy Birthday!</li>
+          <li><strong>Russell Huffman:</strong> Happy Birthday!</li>
+          <li><strong>Ryan Acree:</strong> Happy Birthday!</li>
+          <li><strong>Sandra Collins Burton:</strong> Happy Birthday!</li>
+          <li><strong>Sean Palmer:</strong> Happy Birthday!</li>
+          <li><strong>Shawn Wicker:</strong> Happy Birthday!</li>
+          <li><strong>Shon Rogers:</strong> Happy Birthday!!</li>
+          <li><strong>Steve Day:</strong> Happy Birthday!</li>
+          <li><strong>Ted Combs:</strong> Happy Birthday!</li>
+          <li><strong>Tim Long:</strong> Happy Birthday!</li>
+          <li><strong>Tom Jenkins:</strong> Happy Birthday!</li>
+        </ul>
+      </section>
+
       <footer>Made with love for your special day, Dad.</footer>
     </main>
 
@@ -320,8 +516,9 @@
       const cheerBtn = document.getElementById("cheerBtn");
       const cheers = [
         "Love you, Dad.",
-        "Happy Birthday",
-        "Thank you for all you do for me.",
+        "Happy Birthday, Dad.",
+        "Thanks for everything you do.",
+        "You are the standard.",
       ];
 
       let cheerIndex = 0;
@@ -331,17 +528,14 @@
           song.muted = false;
           await song.play();
           musicToggle.textContent = "Pause Birthday Song";
-          return true;
         } catch {
           try {
             song.muted = true;
             await song.play();
             musicToggle.textContent = "Unmute Birthday Song";
-            cheerText.textContent = "Tap anywhere once to unmute the birthday song.";
-            return true;
+            cheerText.textContent = "Tap once anywhere to unmute the song.";
           } catch {
             musicToggle.textContent = "Tap anywhere to start music";
-            return false;
           }
         }
       }
@@ -349,8 +543,8 @@
       musicToggle.addEventListener("click", async () => {
         if (song.muted) {
           song.muted = false;
-          musicToggle.textContent = "Pause Birthday Song";
           cheerText.textContent = "Love you, Dad.";
+          musicToggle.textContent = "Pause Birthday Song";
           if (song.paused) {
             await song.play().catch(() => {});
           }
@@ -358,12 +552,14 @@
         }
 
         if (song.paused) {
-          try {
-            await song.play();
-            musicToggle.textContent = "Pause Birthday Song";
-          } catch {
-            musicToggle.textContent = "Tap again to play";
-          }
+          await song
+            .play()
+            .then(() => {
+              musicToggle.textContent = "Pause Birthday Song";
+            })
+            .catch(() => {
+              musicToggle.textContent = "Tap again to play";
+            });
         } else {
           song.pause();
           musicToggle.textContent = "Play Birthday Song";
@@ -382,20 +578,15 @@
             cheerText.textContent = "Love you, Dad.";
           }
           if (song.paused) {
-            song
-              .play()
-              .then(() => {
-                musicToggle.textContent = "Pause Birthday Song";
-              })
-              .catch(() => {});
+            song.play().then(() => {
+              musicToggle.textContent = "Pause Birthday Song";
+            }).catch(() => {});
           }
         },
         { once: true }
       );
 
-      window.addEventListener("load", () => {
-        tryAutoplay();
-      });
+      window.addEventListener("load", tryAutoplay);
 
       cheerBtn.addEventListener("click", () => {
         cheerIndex = (cheerIndex + 1) % cheers.length;
